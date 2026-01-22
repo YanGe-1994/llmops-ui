@@ -1,7 +1,5 @@
 <script setup lang="ts"></script>
 
-<template>
-  <router-view />
-</template>
+<template>列表页面</template>
 
 <style scoped></style>
