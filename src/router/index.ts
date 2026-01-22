@@ -31,6 +31,10 @@ const router = createRouter({
           path: 'login',
           component: () => import('@/views/Login/index.vue'),
         },
+        {
+          path: 'space/apps/:app_id',
+          component: () => import('@/views/space/apps/DetailView.vue'),
+        },
       ],
     },
   ],
