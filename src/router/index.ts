@@ -35,6 +35,10 @@ const router = createRouter({
           path: 'space/apps/:app_id',
           component: () => import('@/views/space/apps/DetailView.vue'),
         },
+        {
+          path: 'space/apps/test',
+          component: () => import('@/views/space/apps/Test.vue'),
+        },
       ],
     },
   ],
