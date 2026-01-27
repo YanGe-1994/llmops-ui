@@ -36,8 +36,8 @@ const nodes = ref([
       label: '开始',
       // 输入参数定义：查询语句和位置信息
       inputs: [
-        { name: 'query', type: 'String' },      // 用户查询语句
-        { name: 'location', type: 'String' },   // 位置信息
+        { name: 'query', type: 'String' }, // 用户查询语句
+        { name: 'location', type: 'String' }, // 位置信息
       ],
     },
   },
@@ -143,17 +143,47 @@ const nodes = ref([
  */
 const edges = ref([
   // 开始节点 -> 大模型节点1（上方分支）
-  { id: 'e-start-llm1', source: 'start', target: 'llm-1', animated: true, style: { stroke: '#3b82f6' } },
+  {
+    id: 'e-start-llm1',
+    source: 'start',
+    target: 'llm-1',
+    animated: true,
+    style: { stroke: '#3b82f6' },
+  },
   // 开始节点 -> 知识库节点（下方分支）
-  { id: 'e-start-knowledge', source: 'start', target: 'knowledge', animated: true, style: { stroke: '#3b82f6' } },
+  {
+    id: 'e-start-knowledge',
+    source: 'start',
+    target: 'knowledge',
+    animated: true,
+    style: { stroke: '#3b82f6' },
+  },
   // 大模型节点1 -> 工具节点
-  { id: 'e-llm1-tool', source: 'llm-1', target: 'tool', animated: true, style: { stroke: '#3b82f6' } },
+  {
+    id: 'e-llm1-tool',
+    source: 'llm-1',
+    target: 'tool',
+    animated: true,
+    style: { stroke: '#3b82f6' },
+  },
   // 知识库节点 -> 大模型节点2
-  { id: 'e-knowledge-llm2', source: 'knowledge', target: 'llm-2', animated: true, style: { stroke: '#3b82f6' } },
+  {
+    id: 'e-knowledge-llm2',
+    source: 'knowledge',
+    target: 'llm-2',
+    animated: true,
+    style: { stroke: '#3b82f6' },
+  },
   // 工具节点 -> 结束节点
   { id: 'e-tool-end', source: 'tool', target: 'end', animated: true, style: { stroke: '#3b82f6' } },
   // 大模型节点2 -> 结束节点
-  { id: 'e-llm2-end', source: 'llm-2', target: 'end', animated: true, style: { stroke: '#3b82f6' } },
+  {
+    id: 'e-llm2-end',
+    source: 'llm-2',
+    target: 'end',
+    animated: true,
+    style: { stroke: '#3b82f6' },
+  },
 ])
 
 // ==================== 画布状态 ====================
@@ -164,9 +194,10 @@ const zoomLevel = ref(50)
 <template>
   <!-- 主容器：全屏高度，垂直布局，灰色背景 -->
   <div class="h-screen flex flex-col bg-gray-50">
-
     <!-- ==================== 顶部导航栏 ==================== -->
-    <header class="h-14 bg-white border-b border-gray-200 px-4 flex items-center justify-between shrink-0">
+    <header
+      class="h-14 bg-white border-b border-gray-200 px-4 flex items-center justify-between shrink-0"
+    >
       <!-- 左侧：返回按钮、应用图标、标题信息 -->
       <div class="flex items-center gap-3">
         <!-- 返回按钮 -->
@@ -242,7 +273,11 @@ const zoomLevel = ref(50)
               </div>
             </div>
             <!-- 添加下游节点按钮 -->
-            <a-button type="text" size="mini" class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-blue-500 text-white rounded-full w-5 h-5 p-0">
+            <a-button
+              type="text"
+              size="mini"
+              class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-blue-500 text-white rounded-full w-5 h-5 p-0"
+            >
               <icon-plus :size="12" />
             </a-button>
           </div>
@@ -258,7 +293,9 @@ const zoomLevel = ref(50)
                 <icon-robot class="text-white" :size="14" />
               </div>
               <span class="font-medium text-sm">{{ data.label }}</span>
-              <a-button type="text" size="mini" class="ml-auto p-0"><icon-plus :size="14" /></a-button>
+              <a-button type="text" size="mini" class="ml-auto p-0"
+                ><icon-plus :size="14"
+              /></a-button>
             </div>
             <div class="p-3 space-y-3">
               <!-- 输入参数区域 -->
@@ -269,10 +306,15 @@ const zoomLevel = ref(50)
                 </div>
                 <div class="space-y-1.5">
                   <!-- 遍历显示输入参数及其引用值 -->
-                  <div v-for="input in data.inputs" :key="input.name" class="flex items-center justify-between text-xs">
+                  <div
+                    v-for="input in data.inputs"
+                    :key="input.name"
+                    class="flex items-center justify-between text-xs"
+                  >
                     <div class="flex items-center gap-1">
                       <span class="text-gray-700">{{ input.name }}</span>
-                      <span class="text-red-500">*</span>  <!-- 必填标记 -->
+                      <span class="text-red-500">*</span>
+                      <!-- 必填标记 -->
                       <a-tag size="small" color="blue">{{ input.type }}</a-tag>
                     </div>
                     <span class="text-gray-400">{{ input.value }}</span>
@@ -283,7 +325,9 @@ const zoomLevel = ref(50)
               <div v-if="data.prompt">
                 <div class="flex items-center text-xs text-gray-500 mb-1">
                   <span>提示词</span>
-                  <a-button type="text" size="mini" class="ml-auto text-red-500 p-0"><icon-minus :size="12" /></a-button>
+                  <a-button type="text" size="mini" class="ml-auto text-red-500 p-0"
+                    ><icon-minus :size="12"
+                  /></a-button>
                 </div>
                 <!-- 提示词内容，最多显示3行 -->
                 <div class="text-xs text-gray-600 bg-gray-50 p-2 rounded line-clamp-3">
@@ -295,7 +339,11 @@ const zoomLevel = ref(50)
                 <div class="flex items-center text-xs text-gray-500 mb-1">
                   <span>输出</span>
                 </div>
-                <div v-for="output in data.outputs" :key="output.name" class="flex items-center gap-1 text-xs">
+                <div
+                  v-for="output in data.outputs"
+                  :key="output.name"
+                  class="flex items-center gap-1 text-xs"
+                >
                   <span class="text-gray-700">{{ output.name }}</span>
                   <a-tag size="small" color="blue">{{ output.type }}</a-tag>
                 </div>
@@ -322,7 +370,11 @@ const zoomLevel = ref(50)
                   <span>输入</span>
                   <span class="text-gray-400">引用值</span>
                 </div>
-                <div v-for="input in data.inputs" :key="input.name" class="flex items-center justify-between text-xs">
+                <div
+                  v-for="input in data.inputs"
+                  :key="input.name"
+                  class="flex items-center justify-between text-xs"
+                >
                   <div class="flex items-center gap-1">
                     <span class="text-gray-700">{{ input.name }}</span>
                     <span class="text-red-500">*</span>
@@ -335,11 +387,17 @@ const zoomLevel = ref(50)
               <div>
                 <div class="flex items-center text-xs text-gray-500 mb-2">
                   <span>关联知识库</span>
-                  <a-button type="text" size="mini" class="ml-auto p-0!"><icon-plus :size="12" /></a-button>
+                  <a-button type="text" size="mini" class="ml-auto p-0!"
+                    ><icon-plus :size="12"
+                  /></a-button>
                 </div>
                 <div class="space-y-1.5">
                   <!-- 遍历显示已关联的知识库 -->
-                  <div v-for="ds in data.datasets" :key="ds" class="flex items-center gap-2 text-xs bg-gray-50 px-2 py-1.5 rounded">
+                  <div
+                    v-for="ds in data.datasets"
+                    :key="ds"
+                    class="flex items-center gap-2 text-xs bg-gray-50 px-2 py-1.5 rounded"
+                  >
                     <icon-file class="text-blue-500" :size="14" />
                     <span>{{ ds }}</span>
                   </div>
@@ -350,14 +408,22 @@ const zoomLevel = ref(50)
                 <div class="flex items-center text-xs text-gray-500 mb-1">
                   <span>输出</span>
                 </div>
-                <div v-for="output in data.outputs" :key="output.name" class="flex items-center gap-1 text-xs">
+                <div
+                  v-for="output in data.outputs"
+                  :key="output.name"
+                  class="flex items-center gap-1 text-xs"
+                >
                   <span class="text-gray-700">{{ output.name }}</span>
                   <a-tag size="small" color="blue">{{ output.type }}</a-tag>
                 </div>
               </div>
             </div>
             <!-- 添加下游节点按钮 -->
-            <a-button type="text" size="mini" class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-blue-500! text-white! rounded-full w-5! h-5! p-0!">
+            <a-button
+              type="text"
+              size="mini"
+              class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-blue-500! text-white! rounded-full w-5! h-5! p-0!"
+            >
               <icon-plus :size="12" />
             </a-button>
           </div>
@@ -373,7 +439,9 @@ const zoomLevel = ref(50)
                 <icon-tool class="text-white" :size="14" />
               </div>
               <span class="font-medium text-sm">{{ data.label }}</span>
-              <a-button type="text" size="mini" class="ml-auto p-0!"><icon-plus :size="14" /></a-button>
+              <a-button type="text" size="mini" class="ml-auto p-0!"
+                ><icon-plus :size="14"
+              /></a-button>
             </div>
             <div class="p-3 space-y-3">
               <!-- 输入参数区域 -->
@@ -382,7 +450,11 @@ const zoomLevel = ref(50)
                   <span>输入</span>
                   <span class="text-gray-400">引用值</span>
                 </div>
-                <div v-for="input in data.inputs" :key="input.name" class="flex items-center justify-between text-xs">
+                <div
+                  v-for="input in data.inputs"
+                  :key="input.name"
+                  class="flex items-center justify-between text-xs"
+                >
                   <div class="flex items-center gap-1">
                     <span class="text-gray-700">{{ input.name }}</span>
                     <span class="text-red-500">*</span>
@@ -395,9 +467,15 @@ const zoomLevel = ref(50)
               <div>
                 <div class="flex items-center text-xs text-gray-500 mb-1">
                   <span>输出</span>
-                  <a-button type="text" size="mini" class="ml-auto text-red-500! p-0!"><icon-minus :size="12" /></a-button>
+                  <a-button type="text" size="mini" class="ml-auto text-red-500! p-0!"
+                    ><icon-minus :size="12"
+                  /></a-button>
                 </div>
-                <div v-for="output in data.outputs" :key="output.name" class="flex items-center gap-1 text-xs">
+                <div
+                  v-for="output in data.outputs"
+                  :key="output.name"
+                  class="flex items-center gap-1 text-xs"
+                >
                   <span class="text-gray-700">{{ output.name }}</span>
                   <a-tag size="small" color="blue">{{ output.type }}</a-tag>
                 </div>
@@ -425,7 +503,11 @@ const zoomLevel = ref(50)
               </div>
               <div class="space-y-1.5">
                 <!-- 遍历显示所有最终输出 -->
-                <div v-for="output in data.outputs" :key="output.name" class="flex items-center justify-between text-xs">
+                <div
+                  v-for="output in data.outputs"
+                  :key="output.name"
+                  class="flex items-center justify-between text-xs"
+                >
                   <div class="flex items-center gap-1">
                     <span class="text-gray-700">{{ output.name }}</span>
                     <span class="text-red-500">*</span>
@@ -441,11 +523,11 @@ const zoomLevel = ref(50)
 
       <!-- ==================== 底部工具栏 ==================== -->
       <!-- 悬浮在画布底部的操作工具栏 -->
-      <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3 bg-white rounded-xl shadow-lg px-4 py-2 border border-gray-200">
+      <div
+        class="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3 bg-white rounded-xl shadow-lg px-4 py-2 border border-gray-200"
+      >
         <!-- 节点按钮：用于添加新节点 -->
-        <a-button type="primary" size="small">
-          <icon-save class="mr-1" />节点
-        </a-button>
+        <a-button type="primary" size="small"> <icon-save class="mr-1" />节点 </a-button>
         <!-- 布局按钮 -->
         <a-button type="text" size="small">
           <icon-apps />
@@ -470,22 +552,5 @@ const zoomLevel = ref(50)
 .vue-flow-wrapper {
   width: 100%;
   height: 100%;
-}
-
-/* 深度选择器：自定义 VueFlow 节点样式 */
-:deep() {
-  padding: 0;
-  border-radius: 8px;
-  border: none;
-}
-
-/* 深度选择器：自定义连接线宽度 */
-:deep() {
-  stroke-width: 2;
-}
-
-/* 深度选择器：隐藏默认控制面板（使用自定义底部工具栏） */
-:deep() {
-  display: none;
 }
 </style>

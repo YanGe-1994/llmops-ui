@@ -1,6 +1,6 @@
 import axios, { type AxiosRequestConfig } from 'axios'
 
-const baseUrl = 'http://localhost:5174/api'
+const baseUrl = 'http://localhost:5173/api'
 
 axios.interceptors.request.use(function (config) {
   console.log('请求拦截器')

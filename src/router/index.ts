@@ -41,7 +41,11 @@ const router = createRouter({
         },
         {
           path: 'space/apps/demo',
-          component: () => import('@/views/space/apps/Demo-2.vue'),
+          component: () => import('@/views/space/apps/Demo.vue'),
+        },
+        {
+          path: 'space/apps/agent',
+          component: () => import('@/views/space/apps/agent.vue'),
         },
       ],
     },
