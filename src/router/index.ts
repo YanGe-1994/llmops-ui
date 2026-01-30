@@ -15,11 +15,11 @@ const router = createRouter({
         },
         {
           path: 'list',
-          component: () => import('@/views/List/index.vue'),
+          component: () => import('@/views/list/index.vue'),
         },
         {
           path: 'home',
-          component: () => import('@/views/About/index.vue'),
+          component: () => import('@/views/home/index.vue'),
         },
       ],
     },
@@ -29,23 +29,23 @@ const router = createRouter({
       children: [
         {
           path: 'login',
-          component: () => import('@/views/Login/index.vue'),
+          component: () => import('@/views/auth/login/index.vue'),
         },
         {
           path: 'space/apps/:app_id',
-          component: () => import('@/views/space/apps/DetailView.vue'),
+          component: () => import('@/views/space/apps/detail/index.vue'),
         },
         {
           path: 'space/apps/test',
-          component: () => import('@/views/space/apps/Test.vue'),
+          component: () => import('@/views/_demo/Test.vue'),
         },
         {
           path: 'space/apps/demo',
-          component: () => import('@/views/space/apps/Demo.vue'),
+          component: () => import('@/views/_demo/Demo.vue'),
         },
         {
           path: 'space/apps/agent',
-          component: () => import('@/views/space/apps/agent.vue'),
+          component: () => import('@/views/space/apps/agent/index.vue'),
         },
       ],
     },
